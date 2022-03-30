@@ -16,11 +16,11 @@ public interface PetShorePersistence {
 
     List<Barrio> getBarrio();
 
-    void addBarrio(Barrio barrio) throws Exception;
+    void addBarrio(Barrio barrio) throws PetShoreException;
 
     void addCalificacion(String idVendedor, String idCliente, double calificacion) throws PetShoreException;
 
-    void updateProducto(Producto producto, Usuario usuario) throws Exception;
+    void updateProducto(Producto producto, Usuario usuario) throws PetShoreException;
 
     void updateUser(Usuario user) throws PetShoreException;
 

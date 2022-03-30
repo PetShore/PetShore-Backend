@@ -45,11 +45,11 @@ public class ImplPersistencia implements PetShorePersistence{
     }
 
     @Override
-    public void addBarrio(Barrio barrio) throws Exception {
+    public void addBarrio(Barrio barrio) throws PetShoreException {
         if(barrio != null){
         	neighborhoodRepository.save(barrio);
         } else {
-            throw new Exception(PetShoreException.INVALID_NEIGHBORHOOD);
+            throw new PetShoreException(PetShoreException.INVALID_NEIGHBORHOOD);
         }
     }
 
@@ -107,12 +107,12 @@ public class ImplPersistencia implements PetShorePersistence{
     }
 
     @Override
-    public void updateProducto(Producto producto, Usuario usuario) throws Exception {
+    public void updateProducto(Producto producto, Usuario usuario) throws PetShoreException {
         if(producto != null) {
-            usuario.addProductos(producto);
+            usuario.setProducto(producto);
             userRepository.save(usuario);
         } else {
-            throw new Exception(PetShoreException.INVALID_PRODUCT);
+            throw new PetShoreException(PetShoreException.INVALID_PRODUCT);
         }
     }
 

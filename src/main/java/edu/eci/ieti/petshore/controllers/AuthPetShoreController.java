@@ -21,7 +21,7 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/auth")
 @CrossOrigin(origins = "*")
-public class AuthQuickMobilityController extends BaseController {
+public class AuthPetShoreController extends BaseController {
 	@Autowired
 	private AuthServices authServices;
 
@@ -56,14 +56,14 @@ public class AuthQuickMobilityController extends BaseController {
 	}
 
 	private String getJWTToken(String username) {
-		String secretKey = "quickmobilityAuth";
+		String secretKey = "petshoreAuth";
 		List<GrantedAuthority> grantedAuthorities = AuthorityUtils.commaSeparatedStringToAuthorityList("ROLE_USER");
 
 		String token = Jwts.builder().setSubject(username)
 				.claim("authorities",
 						grantedAuthorities.stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList()))
 				.setIssuedAt(new Date(System.currentTimeMillis()))
-				.setExpiration(new Date(System.currentTimeMillis() + 600000))
+				.setExpiration(new Date(System.currentTimeMillis() + 1500000))
 				.signWith(SignatureAlgorithm.HS512, secretKey.getBytes()).compact();
 
 		return "Bearer " + token;

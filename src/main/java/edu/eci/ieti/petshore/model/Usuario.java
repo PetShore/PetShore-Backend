@@ -135,13 +135,29 @@ public class Usuario {
     public ArrayList<Producto> getProductos() {
         return productos;
     }
+    
+    public void setProducto(Producto prod) {
+        for(Producto prodTemp : getProductos()){
+            if(prodTemp.getId().equals(prod.getId())){
+                prodTemp.setNombre(prod.getNombre());
+                prodTemp.setDescripcion(prod.getDescripcion());
+                prodTemp.setPrecio(prod.getPrecio());
+                break;
+            }
+        }
+    }
 
     public void setProductos(ArrayList<Producto> productos) {
         this.productos = productos;
     }
 
-    public void addProductos(Producto producto){
-        productos.add(producto);
+    public boolean addProductos(Producto producto){
+        boolean repeat = false; 
+        if(productos.contains(producto)){
+           productos.add(producto); 
+           repeat = true;
+        }
+        return repeat;
     }
 
     public void changeValues(Usuario user){
