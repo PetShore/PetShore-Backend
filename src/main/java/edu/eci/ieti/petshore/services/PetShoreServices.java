@@ -23,21 +23,27 @@ public class PetShoreServices extends UserServices {
 		return "Hello World Hola Mundo";
 	}
 
-	public List<Producto> getProductos(String username) throws Exception {
+	public List<Producto> getProductos(String username) throws PetShoreException {
 		return petShorePersistence.getUserByUsername(username).getProductos();
 	}
 
-	public void addProductoUsuario(String user, Producto producto) throws Exception {
+	public boolean addProductoUsuario(String user, Producto producto) throws PetShoreException {
 		Usuario usuario = petShorePersistence.getUserByUsername(user);
-		usuario.addProductos(producto);
-		petShorePersistence.updateUser(usuario);
+		
+                boolean success = usuario.addProductos(producto);
+                if(success){
+                    petShorePersistence.updateUser(usuario);
+                }
+                
+                return success;
+		
 	}
 
 	public List<Barrio> getBarrios() {
 		return petShorePersistence.getBarrio();
 	}
 
-	public void addBarrio(Barrio barrio) throws Exception {
+	public void addBarrio(Barrio barrio) throws PetShoreException {
 		petShorePersistence.addBarrio(barrio);
 	}
 
@@ -45,7 +51,7 @@ public class PetShoreServices extends UserServices {
 		petShorePersistence.addCalificacion(nameConductor, namePasajero, calificacion);
 	}
 
-	public void updateProducto(Producto producto, Usuario usuario) throws Exception {
+	public void updateProducto(Producto producto, Usuario usuario) throws PetShoreException {
 		petShorePersistence.updateProducto(producto, usuario);
 	}
 

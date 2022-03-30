@@ -19,7 +19,7 @@ import java.util.logging.Logger;
 @RestController
 @RequestMapping("/petshore")
 @CrossOrigin(origins = "*")
-public class QuickMobilityController extends BaseController{
+public class PetShoreController extends BaseController{
     @Autowired
     PetShoreServices petShoreServices = null;
 
@@ -28,7 +28,7 @@ public class QuickMobilityController extends BaseController{
     public String helloWorld(){
         return petShoreServices.helloWorld();
     }
-
+    // ya
     @RequestMapping(value ="/product/{username}",method = RequestMethod.GET)
     public ResponseEntity<?> getProducts(@PathVariable String username){
         try{
@@ -36,23 +36,28 @@ public class QuickMobilityController extends BaseController{
             return new ResponseEntity<>(productoCollection, HttpStatus.ACCEPTED);
         }
         catch (Exception e) {
-            Logger.getLogger(QuickMobilityController.class.getName()).log(Level.SEVERE,null,e);
+            Logger.getLogger(PetShoreController.class.getName()).log(Level.SEVERE,null,e);
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
 
-
+    // ya
     @RequestMapping(value="/product/add/{username}", method= RequestMethod.POST)
     public ResponseEntity<?> addProductoUsuario(@RequestBody Producto producto, @PathVariable String username){
         try{
-        	petShoreServices.addProductoUsuario(username, producto);
-            return new ResponseEntity<>(HttpStatus.CREATED);
+        	boolean added = petShoreServices.addProductoUsuario(username, producto);
+                if(added){
+                    return new ResponseEntity<>("ID del producto registrado",HttpStatus.CREATED);
+                }else{
+                    return new ResponseEntity<>("el ID del producto ya esta registrado",HttpStatus.IM_USED);
+                }
         } catch (Exception e){
-            Logger.getLogger(QuickMobilityController.class.getName()).log(Level.SEVERE, null, e);
+            Logger.getLogger(PetShoreController.class.getName()).log(Level.SEVERE, null, e);
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
 
+    // ya
     @RequestMapping(value="/product/update/{username}",method = RequestMethod.PUT)
     public ResponseEntity<?> updateProducto(@RequestBody Producto producto, @PathVariable String username){
         try{
@@ -60,7 +65,7 @@ public class QuickMobilityController extends BaseController{
             petShoreServices.updateProducto(producto,usuario);
             return new ResponseEntity<>(HttpStatus.OK);
         }catch (Exception e){
-            Logger.getLogger(QuickMobilityController.class.getName()).log(Level.SEVERE, null, e);
+            Logger.getLogger(PetShoreController.class.getName()).log(Level.SEVERE, null, e);
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
@@ -72,7 +77,7 @@ public class QuickMobilityController extends BaseController{
             return new ResponseEntity<>(barrioCollection,HttpStatus.ACCEPTED);
 
         } catch (Exception e){
-            Logger.getLogger(QuickMobilityController.class.getName()).log(Level.SEVERE, null, e);
+            Logger.getLogger(PetShoreController.class.getName()).log(Level.SEVERE, null, e);
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
@@ -85,7 +90,7 @@ public class QuickMobilityController extends BaseController{
             petShoreServices.addBarrio(barrio);
             return new ResponseEntity<>(HttpStatus.CREATED);
         } catch (Exception e){
-            Logger.getLogger(QuickMobilityController.class.getName()).log(Level.SEVERE, null, e);
+            Logger.getLogger(PetShoreController.class.getName()).log(Level.SEVERE, null, e);
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
@@ -96,7 +101,7 @@ public class QuickMobilityController extends BaseController{
         	petShoreServices.addCalificacion(nameConductor,namePasajero,calificacion);
             return new ResponseEntity<>(HttpStatus.CREATED);
         } catch (Exception e){
-            Logger.getLogger(QuickMobilityController.class.getName()).log(Level.SEVERE, null, e);
+            Logger.getLogger(PetShoreController.class.getName()).log(Level.SEVERE, null, e);
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
@@ -107,7 +112,7 @@ public class QuickMobilityController extends BaseController{
             String state = petShoreServices.getUserStatus(username);
             return new ResponseEntity<>(state,HttpStatus.OK);
         } catch (PetShoreException e) {
-            Logger.getLogger(QuickMobilityController.class.getName()).log(Level.SEVERE, null, e);
+            Logger.getLogger(PetShoreController.class.getName()).log(Level.SEVERE, null, e);
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
@@ -119,7 +124,7 @@ public class QuickMobilityController extends BaseController{
             double average = petShoreServices.getAverage(username,type);
             return new ResponseEntity<>(average,HttpStatus.OK);
         } catch (PetShoreException e) {
-            Logger.getLogger(QuickMobilityController.class.getName()).log(Level.SEVERE, null, e);
+            Logger.getLogger(PetShoreController.class.getName()).log(Level.SEVERE, null, e);
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
@@ -130,7 +135,7 @@ public class QuickMobilityController extends BaseController{
         	petShoreServices.updateUserBasicInfo(usuario);
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (PetShoreException e) {
-            Logger.getLogger(QuickMobilityController.class.getName()).log(Level.SEVERE, null, e);
+            Logger.getLogger(PetShoreController.class.getName()).log(Level.SEVERE, null, e);
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
@@ -140,17 +145,17 @@ public class QuickMobilityController extends BaseController{
         try {
             return new ResponseEntity<>(petShoreServices.getShopSeller(usernameSeller),HttpStatus.OK);
         } catch (PetShoreException e) {
-            Logger.getLogger(QuickMobilityController.class.getName()).log(Level.SEVERE, null, e);
+            Logger.getLogger(PetShoreController.class.getName()).log(Level.SEVERE, null, e);
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
 
-    @RequestMapping(value = "/shop/client/{usernameClient}")
+    @RequestMapping(value = "/shop/client/{usernameClient}",method = RequestMethod.GET)
     public ResponseEntity<?> getShopByClient(@PathVariable String usernameClient){
         try {
             return new ResponseEntity<>(petShoreServices.getShopClient(usernameClient),HttpStatus.OK);
         } catch (PetShoreException e) {
-            Logger.getLogger(QuickMobilityController.class.getName()).log(Level.SEVERE, null, e);
+            Logger.getLogger(PetShoreController.class.getName()).log(Level.SEVERE, null, e);
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
