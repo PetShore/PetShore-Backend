@@ -31,9 +31,8 @@ public class PetShoreServices extends UserServices {
 		Usuario usuario = petShorePersistence.getUserByUsername(user);
 		
                 boolean success = usuario.addProductos(producto);
-                if(success){
-                    petShorePersistence.updateUser(usuario);
-                }
+
+                petShorePersistence.updateUser(usuario);
                 
                 return success;
 		

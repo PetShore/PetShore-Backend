@@ -1,10 +1,8 @@
 package edu.eci.ieti.petshore.model;
 
-import org.springframework.data.annotation.Id;
-
 public class Producto {
-    @Id
-    public String id;
+    
+    public String codigoId;
     public String nombre;
     public String descripcion;
     public String precio;
@@ -21,7 +19,7 @@ public class Producto {
         this.categoria = categoria;
     }
     public Producto(String id, String nombre, String descripcion, String precio, boolean disponible, Categoria categoria){
-        this.id = id;
+        this.codigoId = id;
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.precio = precio;
@@ -69,11 +67,11 @@ public class Producto {
         this.categoria = categoria;
     }
 
-    public String getId() {
-        return id;
+    public String getCodigoId() {
+        return codigoId;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setCodigoId(String codigoId) {
+        this.codigoId = codigoId;
     }
 }

@@ -35,7 +35,7 @@ public class PetShoreController extends BaseController{
             Collection<Producto> productoCollection = petShoreServices.getProductos(username);
             return new ResponseEntity<>(productoCollection, HttpStatus.ACCEPTED);
         }
-        catch (Exception e) {
+        catch (PetShoreException e) {
             Logger.getLogger(PetShoreController.class.getName()).log(Level.SEVERE,null,e);
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
@@ -46,12 +46,12 @@ public class PetShoreController extends BaseController{
     public ResponseEntity<?> addProductoUsuario(@RequestBody Producto producto, @PathVariable String username){
         try{
         	boolean added = petShoreServices.addProductoUsuario(username, producto);
-                if(added){
+                if(added == false){
                     return new ResponseEntity<>("ID del producto registrado",HttpStatus.CREATED);
                 }else{
                     return new ResponseEntity<>("el ID del producto ya esta registrado",HttpStatus.IM_USED);
                 }
-        } catch (Exception e){
+        } catch (PetShoreException e){
             Logger.getLogger(PetShoreController.class.getName()).log(Level.SEVERE, null, e);
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
@@ -64,7 +64,7 @@ public class PetShoreController extends BaseController{
             Usuario usuario = getCurrentUser(petShoreServices.getUserByUsername(username));
             petShoreServices.updateProducto(producto,usuario);
             return new ResponseEntity<>(HttpStatus.OK);
-        }catch (Exception e){
+        }catch (PetShoreException e){
             Logger.getLogger(PetShoreController.class.getName()).log(Level.SEVERE, null, e);
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
@@ -89,7 +89,7 @@ public class PetShoreController extends BaseController{
             System.out.println("w");
             petShoreServices.addBarrio(barrio);
             return new ResponseEntity<>(HttpStatus.CREATED);
-        } catch (Exception e){
+        } catch (PetShoreException e){
             Logger.getLogger(PetShoreController.class.getName()).log(Level.SEVERE, null, e);
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
@@ -100,7 +100,7 @@ public class PetShoreController extends BaseController{
         try{
         	petShoreServices.addCalificacion(nameConductor,namePasajero,calificacion);
             return new ResponseEntity<>(HttpStatus.CREATED);
-        } catch (Exception e){
+        } catch (PetShoreException e){
             Logger.getLogger(PetShoreController.class.getName()).log(Level.SEVERE, null, e);
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
