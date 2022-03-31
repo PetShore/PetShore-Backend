@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 @Document(collection = "user")
 public class Usuario {
+
     @Id
     public String userId;
     public String username;
@@ -20,7 +21,7 @@ public class Usuario {
     public ArrayList<Vendedor> vendedores;
     public ArrayList<Producto> productos;
 
-    public Usuario(){
+    public Usuario() {
         this.clientes = new ArrayList<Cliente>();
         this.vendedores = new ArrayList<Vendedor>();
         this.productos = new ArrayList<Producto>();
@@ -41,7 +42,7 @@ public class Usuario {
     }
 
     public Usuario(String username, String nombreCompleto, String password, String email,
-                   String barrio, String direccionResidencia, String numero){
+            String barrio, String direccionResidencia, String numero) {
         this.username = username;
         this.nombreCompleto = nombreCompleto;
         this.password = password;
@@ -50,7 +51,6 @@ public class Usuario {
         this.direccionResidencia = direccionResidencia;
         this.numero = numero;
     }
-
 
     public String getNombreCompleto() {
         return nombreCompleto;
@@ -135,10 +135,10 @@ public class Usuario {
     public ArrayList<Producto> getProductos() {
         return productos;
     }
-    
+
     public void setProducto(Producto prod) {
-        for(Producto prodTemp : getProductos()){
-            if(prodTemp.getId().equals(prod.getId())){
+        for (Producto prodTemp : getProductos()) {
+            if (prodTemp.getCodigoId().equals(prod.getCodigoId())) {
                 prodTemp.setNombre(prod.getNombre());
                 prodTemp.setDescripcion(prod.getDescripcion());
                 prodTemp.setPrecio(prod.getPrecio());
@@ -151,16 +151,11 @@ public class Usuario {
         this.productos = productos;
     }
 
-    public boolean addProductos(Producto producto){
-        boolean repeat = false; 
-        if(productos.contains(producto)){
-           productos.add(producto); 
-           repeat = true;
-        }
-        return repeat;
+    public boolean addProductos(Producto producto) {
+        return containId(producto);
     }
 
-    public void changeValues(Usuario user){
+    public void changeValues(Usuario user) {
         this.password = user.password;
         this.direccionResidencia = user.direccionResidencia;
         this.numero = user.numero;
@@ -169,5 +164,26 @@ public class Usuario {
         this.clientes = user.clientes;
         this.vendedores = user.vendedores;
         this.productos = user.productos;
+    }
+
+    private boolean containId(Producto producto) {
+        boolean repeat = false;
+        if (!productos.isEmpty()) {
+            for (Producto p : productos) {
+                if (producto.getCodigoId().equals(p.getCodigoId())) {
+                    repeat = true;
+                    break;
+                }
+            }
+        } else {
+            productos.add(producto);
+            repeat = true;
+        }
+        
+        if(repeat == false){
+            productos.add(producto);
+        }
+
+        return repeat;
     }
 }
